@@ -35,7 +35,7 @@ jobs:
       run: |
         ssh -o StrictHostKeyChecking=no -i $ssh-private-key $EC2_USER@$EC2_HOST << 'EOF'
           sudo su
-          cd /var/www/project/project_K
+          cd /var/www/project/PROJECT-K
           git pull origin main
           source /var/www/project/venv/bin/activate
           python3 -m pip install -r requirements.txt
