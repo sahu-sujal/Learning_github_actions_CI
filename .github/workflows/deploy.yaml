@@ -3,7 +3,7 @@ name: PROJECT K DEPLOY
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   deploy:
