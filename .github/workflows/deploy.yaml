@@ -24,6 +24,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y libmysqlclient-dev pkg-config
+        git pull origin main
         python -m venv env  # Create a virtual environment named 'env'
         source env/bin/activate  # Activate the virtual environment
         python -m pip install --upgrade pip
