@@ -12,12 +12,6 @@ jobs:
       matrix:
         python-version: [3.x]
 
-    env:
-      RAZORPAY_KEY: rzp_live_Ue31MEqzdns5Zg
-      RAZORPAY_SECRET: 2nou11r7oBApOctQdSGztzmv
-      EMAIL_HOST_PASSWORD: pwgl msqz nebp pblx
-      EMAIL_HOST_USER: astutelexservicado@gmail.com
-
     steps:
     - uses: actions/checkout@v4
     
@@ -34,28 +28,23 @@ jobs:
         source env/bin/activate  # Activate the virtual environment
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        pip install gunicorn
-        pip install pdf2image
-        pip install python-decouple
+        # pip install gunicorn
+        # pip install pdf2image
+        # pip install python-decouple
 
-    - name: Copy static and media folders
-      run: |
-        sudo cp -r static /var/www/LexAi
-        sudo cp -r media /var/www/LexAi
+    # - name: Serving Static Files
+    #   run: |
+    #     echo "Serving Static Files..."
+    #     source env/bin/activate  # Ensure the virtual environment is activated
+    #     python manage.py collectstatic --noinput
 
-    - name: Serving Static Files
-      run: |
-        echo "Serving Static Files..."
-        source env/bin/activate  # Ensure the virtual environment is activated
-        python manage.py collectstatic --noinput
+    # - name: Running Database migration
+    #   run: |
+    #     echo "Running Database migration..."
+    #     source ../venv/bin/activate  # Ensure the virtual environment is activated
+    #     python manage.py makemigrations
+    #     python manage.py migrate
 
-    - name: Running Database migration
-      run: |
-        echo "Running Database migration..."
-        source ../venv/bin/activate  # Ensure the virtual environment is activated
-        python manage.py makemigrations
-        python manage.py migrate
-
-    - name: Restart Gunicorn service
-      run: |
-        sudo systemctl restart Gunicorn
+    # - name: Restart Gunicorn service
+    #   run: |
+    #     sudo systemctl restart Gunicorn
