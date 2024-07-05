@@ -1,14 +1,14 @@
-name: Deploy Python App to AWS Prod
+
+name: Django CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: self-hosted
-
+   
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -17,19 +17,17 @@ jobs:
       - name: Deploy application
         run: |
           app_dir="/var/www/project/PROJECT-K"
-
           cd "$app_dir"
-
+          sudo su
           # Pull the latest changes from the Git repository
           sudo git pull origin main
-
           # Check if the pull was successful
           if [ $? -eq 0 ]; then
-            sudo su
             source  /var/www/project/venv/bin/activate
-            sudo python3 -m pip install -r requirements.txt
-            sudo python3 manage.py migrate
-            sudo systemctl restart emohar.service
+            python3 -m pip install -r requirements.txt
+            python3 manage.py migrate
+            sudo systemctl restart gunicorn
+            sudo systemctl restart nginx
             echo "Git pull successful, and service restarted."
           else
             echo "Git pull failed. Please check your Git repository."
