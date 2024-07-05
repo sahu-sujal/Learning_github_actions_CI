@@ -19,6 +19,8 @@ jobs:
 
           cd "$app_dir"
 
+          sudo su
+
           # Pull the latest changes from the Git repository
           sudo git pull origin main
 
