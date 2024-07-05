@@ -25,9 +25,9 @@ jobs:
           if [ $? -eq 0 ]; then
             # Activate the virtual environment and run commands as the root user
             sudo bash -c "source $venv_dir/bin/activate && \
-                          sudo python -m pip install --upgrade pip && \
+                          sudo python3 -m pip install --upgrade pip && \
                           sudo pip install -r requirements.txt && \
-                          sudo python manage.py migrate && \
+                          sudo python3 manage.py migrate && \
                           sudo systemctl restart gunicorn && \
                           sudo systemctl restart nginx"
             
