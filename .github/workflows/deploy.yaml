@@ -23,17 +23,13 @@ jobs:
           
           # Check if the pull was successful
           if [ $? -eq 0 ]; then
-            # Activate the virtual environment
-            source "$venv_dir/bin/activate"
-            
-            # Install Python packages within the virtual environment
-            python -m pip install --upgrade pip
-            pip install -r requirements.txt
-            
-            # Apply migrations and restart services
-            python manage.py migrate
-            sudo systemctl restart gunicorn
-            sudo systemctl restart nginx
+            # Activate the virtual environment and run commands as the root user
+            sudo bash -c "source $venv_dir/bin/activate && \
+                          sudo python -m pip install --upgrade pip && \
+                          sudo pip install -r requirements.txt && \
+                          sudo python manage.py migrate && \
+                          sudo systemctl restart gunicorn && \
+                          sudo systemctl restart nginx"
             
             echo "Git pull successful, and service restarted."
           else
