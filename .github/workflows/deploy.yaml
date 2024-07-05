@@ -7,28 +7,34 @@ on:
 jobs:
   build:
     runs-on: self-hosted
-   
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-        
       - name: Deploy application
         run: |
           app_dir="/var/www/project/PROJECT-K"
-
+          venv_dir="/var/www/project/venv"
           cd "$app_dir"
-
+          
           # Pull the latest changes from the Git repository
           sudo git pull origin main
-
+          
           # Check if the pull was successful
           if [ $? -eq 0 ]; then
-            source  /var/www/project/venv/bin/activate
-            sudo python3 -m pip install -r requirements.txt
-            sudo python3 manage.py migrate
+            # Activate the virtual environment
+            source "$venv_dir/bin/activate"
+            
+            # Install Python packages within the virtual environment
+            python -m pip install --upgrade pip
+            pip install -r requirements.txt
+            
+            # Apply migrations and restart services
+            python manage.py migrate
             sudo systemctl restart gunicorn
             sudo systemctl restart nginx
+            
             echo "Git pull successful, and service restarted."
           else
             echo "Git pull failed. Please check your Git repository."
