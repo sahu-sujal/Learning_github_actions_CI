@@ -19,16 +19,14 @@ jobs:
 
           cd "$app_dir"
 
-          sudo su
-
           # Pull the latest changes from the Git repository
           sudo git pull origin main
 
           # Check if the pull was successful
           if [ $? -eq 0 ]; then
             source  /var/www/project/venv/bin/activate
-            python3 -m pip install -r requirements.txt
-            python3 manage.py migrate
+            sudo python3 -m pip install -r requirements.txt
+            sudo python3 manage.py migrate
             sudo systemctl restart gunicorn
             sudo systemctl restart nginx
             echo "Git pull successful, and service restarted."
