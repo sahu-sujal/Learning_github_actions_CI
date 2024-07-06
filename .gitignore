@@ -1,0 +1,23 @@
+# Ignore the database file
+db.sqlite3
+
+# Ignore the static files directory
+staticfiles/
+
+# Ignore the uploaded contracts
+upload_contract/
+
+# Ignore virtual environment directory
+venv/
+
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Ignore environment variables file
+.env
+
+# Ignore compiled files
+*.pyc
+
